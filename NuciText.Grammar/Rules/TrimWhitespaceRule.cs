@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace NuciText.Grammar.Rules
 {
     /// <summary>
@@ -9,10 +11,10 @@ namespace NuciText.Grammar.Rules
         public override string Id => "trim-whitespace";
 
         /// <inheritdoc/>
-        public override string Description => "Trims leading and trailing whitespace.";
+        public override string Description => "Normalises whitespace by trimming and collapsing internal whitespace.";
 
         /// <inheritdoc/>
         protected override string DoApply(string text)
-            => text.Trim().Replace("\\t ", " ");
+            => Regex.Replace(text.Trim(), "\\s+", " ", RegexOptions.CultureInvariant);
     }
 }

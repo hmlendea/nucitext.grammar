@@ -18,7 +18,7 @@ namespace NuciText.Grammar.UnitTests.Rules
         [Test]
         public void Description_ReturnsExpectedValue()
         {
-            Assert.That(rule.Description, Is.EqualTo("Trims leading and trailing whitespace."));
+            Assert.That(rule.Description, Is.EqualTo("Normalises whitespace by trimming and collapsing internal whitespace."));
         }
 
         [Test]
@@ -42,11 +42,19 @@ namespace NuciText.Grammar.UnitTests.Rules
         }
 
         [Test]
-        public void Apply_TextContainsInternalWhitespace_PreservesInternalWhitespace()
+        public void Apply_TextContainsInternalWhitespace_CollapsesInternalWhitespace()
         {
             string result = rule.Apply("  salut   lume  ");
 
-            Assert.That(result, Is.EqualTo("salut   lume"));
+            Assert.That(result, Is.EqualTo("salut lume"));
+        }
+
+        [Test]
+        public void Apply_TextContainsTabsAndNewlines_CollapsesWhitespaceToSingleSpaces()
+        {
+            string result = rule.Apply("\t salut\n\n lume \t");
+
+            Assert.That(result, Is.EqualTo("salut lume"));
         }
 
         [Test]

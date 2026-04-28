@@ -1,41 +1,42 @@
 using System;
 
-namespace NuciText.Grammar;
-
-/// <summary>
-/// The exception thrown when a <see cref="IGrammarRule"/> fails to apply its correction.
-/// </summary>
-public class GrammarRuleException : Exception
+namespace NuciText.Grammar
 {
     /// <summary>
-    /// Gets the ID of the rule that failed.
+    /// The exception thrown when a <see cref="IGrammarRule"/> fails to apply its correction.
     /// </summary>
-    public string RuleId { get; }
-
-    /// <summary>
-    /// Initialises a new <see cref="GrammarRuleException"/> for the given rule.
-    /// </summary>
-    public GrammarRuleException(string ruleId)
-        : base($"Grammar rule '{ruleId}' failed to apply.")
+    public class GrammarRuleException : Exception
     {
-        RuleId = ruleId;
-    }
+        /// <summary>
+        /// Gets the ID of the rule that failed.
+        /// </summary>
+        public string RuleId { get; }
 
-    /// <summary>
-    /// Initialises a new <see cref="GrammarRuleException"/> for the given rule with a custom message.
-    /// </summary>
-    public GrammarRuleException(string ruleId, string message)
-        : base(message)
-    {
-        RuleId = ruleId;
-    }
+        /// <summary>
+        /// Initialises a new <see cref="GrammarRuleException"/> for the given rule.
+        /// </summary>
+        public GrammarRuleException(string ruleId)
+            : base($"Grammar rule '{ruleId}' failed to apply.")
+        {
+            RuleId = ruleId;
+        }
 
-    /// <summary>
-    /// Initialises a new <see cref="GrammarRuleException"/> for the given rule with a custom message and inner exception.
-    /// </summary>
-    public GrammarRuleException(string ruleId, string message, Exception innerException)
-        : base(message, innerException)
-    {
-        RuleId = ruleId;
+        /// <summary>
+        /// Initialises a new <see cref="GrammarRuleException"/> for the given rule with a custom message.
+        /// </summary>
+        public GrammarRuleException(string ruleId, string message)
+            : base(message)
+        {
+            RuleId = ruleId;
+        }
+
+        /// <summary>
+        /// Initialises a new <see cref="GrammarRuleException"/> for the given rule with a custom message and inner exception.
+        /// </summary>
+        public GrammarRuleException(string ruleId, string message, Exception innerException)
+            : base(message, innerException)
+        {
+            RuleId = ruleId;
+        }
     }
 }

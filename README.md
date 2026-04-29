@@ -5,54 +5,124 @@
 
 # NuciText.Grammar
 
-Base NuGet package providing the interfaces and abstract classes for building language-specific grammar correction packages.
+`NuciText.Grammar` is a lightweight, dependency-free .NET library for rule-based grammar and text normalisation.
 
-## Overview
+It provides:
 
-`NuciText.Grammar` is a framework-agnostic, dependency-free base library. It defines the contracts that all language-specific grammar correction packages must implement. Each language pack depends on this package and contributes only its own rule set — no shared logic is duplicated.
+- A small core API for defining grammar rules and rule sets
+- A concrete `GrammarCorrector` that applies rules in order
+- Reusable base classes for building language-specific correction packages
+- A bundled `TrimWhitespaceRule` for whitespace normalisation
 
-## Abstractions
+## Installation
+
+```bash
+dotnet add package NuciText.Grammar
+```
+
+## Quick start
+
+```csharp
+using NuciText.Grammar;
+using NuciText.Grammar.Rules;
+
+public sealed class BasicRuleSet : GrammarRuleSet
+{
+    public override string LanguageCode => "und";
+
+    public override IReadOnlyList<IGrammarRule> Rules { get; } = new IGrammarRule[]
+    {
+        new TrimWhitespaceRule()
+    };
+}
+
+IGrammarRuleSet ruleSet = new BasicRuleSet();
+IGrammarCorrector corrector = new GrammarCorrector(ruleSet);
+
+string corrected = corrector.Correct("  Hello    world  ");
+// "Hello world"
+```
+
+## How it works
+
+`GrammarCorrector` walks through the rules exposed by an `IGrammarRuleSet` and applies each rule in order.
+
+- Rules run sequentially
+- Each rule receives the output of the previous rule
+- A rule is only applied when `CanApply` returns `true`
+- Rule ordering matters when multiple rules can affect the same text
+
+This makes the package suitable for deterministic, rule-based cleanup pipelines such as punctuation spacing, whitespace normalisation, and language-specific corrections.
+
+## Public API
 
 | Type | Kind | Purpose |
 |------|------|---------|
-| `IGrammarRule` | Interface | A single correction rule: detects a pattern and transforms text |
-| `IGrammarRuleSet` | Interface | An ordered collection of rules for a specific language |
-| `IGrammarCorrector` | Interface | Applies a rule set to produce corrected text |
-| `GrammarRule` | Abstract class | Base for custom rules; provides a default `CanApply` implementation |
-| `GrammarRuleSet` | Abstract class | Base for language rule sets |
-| `GrammarCorrector` | Sealed class | Concrete corrector; iterates through a rule set and applies each matching rule |
-| `GrammarRuleException` | Exception | Thrown when a rule fails to apply |
+| `IGrammarRule` | Interface | Defines a single correction rule |
+| `IGrammarRuleSet` | Interface | Defines an ordered list of rules for one language or scenario |
+| `IGrammarCorrector` | Interface | Defines the text correction entry point |
+| `GrammarRule` | Abstract class | Base class for custom rules with default applicability logic |
+| `GrammarRuleSet` | Abstract class | Base class for rule set implementations |
+| `GrammarCorrector` | Class | Applies all rules in a rule set to a piece of text |
+| `GrammarRuleException` | Exception | Exception type available for rule execution failures |
+| `TrimWhitespaceRule` | Rule | Trims leading and trailing whitespace and collapses internal whitespace |
 
-## Creating a language pack
+## Built-in rule
 
-1. Add a NuGet reference to `NuciText.Grammar`.
-2. Implement your rules by extending `GrammarRule`:
+### `TrimWhitespaceRule`
+
+Normalises whitespace by:
+
+- Trimming leading whitespace
+- Trimming trailing whitespace
+- Collapsing consecutive whitespace characters to a single space
+
+Example:
 
 ```csharp
+var rule = new TrimWhitespaceRule();
+string result = rule.Apply("\t salut\n\n lume \t");
+// "salut lume"
+```
+
+## Creating custom rules
+
+Derive from `GrammarRule` and implement `Id`, `Description`, and `DoApply`.
+
+```csharp
+using System.Text.RegularExpressions;
+using NuciText.Grammar;
+
 public sealed class NoDoubleSpaceRule : GrammarRule
 {
     public override string Id => "no-double-space";
     public override string Description => "Replaces consecutive spaces with a single space.";
-    public override string Apply(string text) => Regex.Replace(text, " {2,}", " ");
+
+    protected override string DoApply(string text)
+        => Regex.Replace(text, " {2,}", " ", RegexOptions.CultureInvariant);
 }
 ```
 
-3. Collect your rules in a `GrammarRuleSet`:
+By default, `GrammarRule.CanApply` checks whether `DoApply` would change the text. Override `CanApply` or `CheckApplicability` if you need a faster pre-check.
+
+## Creating a language-specific rule set
 
 ```csharp
+using NuciText.Grammar;
+
 public sealed class EnglishGrammarRuleSet : GrammarRuleSet
 {
     public override string LanguageCode => "en";
 
     public override IReadOnlyList<IGrammarRule> Rules { get; } = new IGrammarRule[]
     {
-        new NoDoubleSpaceRule(),
-        // … more rules
+        new TrimWhitespaceRule(),
+        new NoDoubleSpaceRule()
     };
 }
 ```
 
-4. Use `GrammarCorrector` to apply corrections:
+You can then plug the rule set into `GrammarCorrector`:
 
 ```csharp
 IGrammarRuleSet ruleSet = new EnglishGrammarRuleSet();
@@ -61,6 +131,24 @@ IGrammarCorrector corrector = new GrammarCorrector(ruleSet);
 string corrected = corrector.Correct(inputText);
 ```
 
+## Target framework
+
+The package currently targets `net10.0`.
+
+## Development
+
+Build the solution:
+
+```bash
+dotnet build
+```
+
+Run the test suite:
+
+```bash
+dotnet test
+```
+
 ## License
 
-GPL-3.0-or-later — see [LICENSE](LICENSE).
+GPL-3.0-or-later. See [LICENSE](LICENSE).

@@ -1,3 +1,5 @@
+[![Build Status](https://github.com/hmlendea/nucitext.grammar/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hmlendea/nucitext.grammar/actions/workflows/dotnet.yml)
+
 # NuciText.Grammar
 
 Base NuGet package providing the interfaces and abstract classes for building language-specific grammar correction packages.

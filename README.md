@@ -17,6 +17,7 @@
 - [Public API](#-public-api)
 - [Built-in Rule](#-built-in-rule)
 - [Known Limitations](#-known-limitations)
+- [Documentation](#-documentation)
 - [Contributing](#-contributing)
 - [Security](#-security)
 - [Architecture](#-architecture)
@@ -120,6 +121,21 @@ string result = rule.Apply("\t salut\n\n lume \t");
 - Only provides a single built-in rule (`TrimWhitespaceRule`); language-specific rules must be implemented by consumers
 - No built-in natural language processing or machine learning capabilities
 - Rule ordering is manual and must be managed by the rule set implementation
+
+## 📖 Documentation
+
+Full documentation is available in the [`docs/`](./docs/) directory:
+
+- [Documentation Index](./docs/INDEX.md) — Master index with navigation aids
+- [Quick Start](./docs/quick-start.md) — Get running in 5 minutes
+- [API Usage Examples](./docs/api-usage-examples.md) — Common patterns and DI integration
+- [Architecture](./docs/architecture.md) — Layers, runtime flow, components
+- [Components Reference](./docs/components/core.md) — Complete API reference
+- [Text Correction Flow](./docs/flows/text-correction.md) — End-to-end sequence diagram
+- [Behaviour Reference](./docs/behaviour/text-correction.md) — Observable behaviors
+- [API Reference](./docs/api-reference/INDEX.md) — Public API surface table
+- [Testing Guide](./docs/testing.md) — NUnit + Moq strategy and patterns
+- [Troubleshooting](./docs/troubleshooting.md) — Common issues and debugging
 
 ## 🤝 Contributing
 

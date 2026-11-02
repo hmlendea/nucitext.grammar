@@ -4,10 +4,10 @@ This document describes the security policy for NuciText.Grammar, including supp
 
 ## 📑 Table of Contents
 
-- [Supported Versions](#supported-versions)
-- [Reporting a Vulnerability](#reporting-a-vulnerability)
-- [Scope](#scope)
-- [Disclosure Policy](#disclosure-policy)
+- [Supported Versions](#-supported-versions)
+- [Reporting a Vulnerability](#-reporting-a-vulnerability)
+- [Scope](#-scope)
+- [Disclosure Policy](#-disclosure-policy)
 
 ## 🛡️ Supported Versions
 

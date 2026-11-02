@@ -4,22 +4,22 @@ This document covers the guidelines and processes for contributing to this proje
 
 ## 📑 Table of Contents
 
-- [How to Contribute](#how-to-contribute)
-  - [Reporting Issues](#reporting-issues)
-  - [Suggesting Enhancements](#suggesting-enhancements)
-  - [Code Contributions](#code-contributions)
-    - [Prerequisites](#prerequisites)
-    - [Development Setup](#development-setup)
-    - [Making Changes](#making-changes)
-    - [Pull Request Guidelines](#pull-request-guidelines)
-  - [Code Style](#code-style)
-  - [Testing](#testing)
-  - [Documentation](#documentation)
-- [Code of Conduct](#code-of-conduct)
-- [Security](#security)
-- [License](#license)
-- [Recognition](#recognition)
-- [Getting Assistance](#getting-assistance)
+- [How to Contribute](#-how-to-contribute)
+  - [Reporting Issues](#-reporting-issues)
+  - [Suggesting Enhancements](#-suggesting-enhancements)
+  - [Code Contributions](#-code-contributions)
+    - [Prerequisites](#-prerequisites)
+    - [Development Setup](#-development-setup)
+    - [Making Changes](#-making-changes)
+    - [Pull Request Guidelines](#-pull-request-guidelines)
+  - [Code Style](#-code-style)
+  - [Testing](#-testing)
+  - [Documentation](#-documentation)
+- [Code of Conduct](#-code-of-conduct)
+- [Security](#-security)
+- [License](#-license)
+- [Recognition](#-recognition)
+- [Getting Assistance](#-getting-assistance)
 
 ## 🤝 How to Contribute
 
@@ -59,9 +59,10 @@ dotnet restore
 2. Create a feature branch: `git checkout -b feature/your-feature-name`
 3. Make your changes.
 4. Run tests: `dotnet test`
-5. Commit with clear and descriptive messages.
-6. Push to your fork.
-7. Open a Pull Request.
+5. Run linters: `dotnet format --verify-no-changes`
+6. Commit with clear and descriptive messages.
+7. Push to your fork.
+8. Open a Pull Request.
 
 #### Pull Request Guidelines
 
@@ -103,13 +104,13 @@ Report security vulnerabilities per the [Security Policy](./SECURITY.md).
 
 ## 📄 License
 
-By contributing, you agree that your contributions will be licensed under the GNU General Public License v3.0 or later.
+By contributing, you agree that your contributions will be licensed under the [GNU General Public License v3.0 or later](./LICENSE).
 
 ## 🙏 Recognition
 
-Contributors are recognized in the GitHub contributors list.
+Contributors are recognized in the [contributors list](https://github.com/hmlendea/nucitext.grammar/graphs/contributors).
 
 ## ❓ Getting Assistance
 
-- Open a GitHub issue for questions or discussions.
+- Open an issue on GitHub
 - Check existing discussions and documentation first.

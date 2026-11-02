@@ -19,6 +19,7 @@
 - [Known Limitations](#-known-limitations)
 - [Contributing](#-contributing)
 - [Security](#-security)
+- [Architecture](#-architecture)
 - [License](#-license)
 
 ## ✨ Capabilities
@@ -127,6 +128,10 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.
 ## 🔒 Security
 
 Report security vulnerabilities per the [Security Policy](./SECURITY.md).
+
+## 🏗️ Architecture
+
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for the system context, principal components, runtime flows, ownership boundaries, dependencies, constraints, and extension points.
 
 ## 📄 License
 

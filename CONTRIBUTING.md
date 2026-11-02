@@ -15,6 +15,7 @@ This document covers the guidelines and processes for contributing to this proje
   - [Code Style](#code-style)
   - [Testing](#testing)
   - [Documentation](#documentation)
+- [Code of Conduct](#code-of-conduct)
 - [License](#license)
 - [Recognition](#recognition)
 - [Getting Assistance](#getting-assistance)
@@ -90,6 +91,10 @@ dotnet test NuciText.Grammar.UnitTests
 - Revise relevant docs for changes.
 - Follow the documentation style guide.
 - Preview changes locally if possible.
+
+## 📋 Code of Conduct
+
+This project follows the [Code of Conduct](./CODE_OF_CONDUCT.md).
 
 ## 📄 License
 

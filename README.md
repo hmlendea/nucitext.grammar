@@ -188,3 +188,7 @@ Please:
 
 Licensed under the GNU General Public License v3.0 or later.
 See [LICENSE](./LICENSE) for details.
+
+## 🛡️ Privacy and Data
+
+NuciText.Grammar operates entirely in-process on text provided by the calling application and does not collect, transmit, store, or process any personal data on its own behalf. See [PRIVACY.md](./PRIVACY.md) for the full data-handling description.

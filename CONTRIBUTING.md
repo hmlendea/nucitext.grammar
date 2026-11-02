@@ -16,6 +16,7 @@ This document covers the guidelines and processes for contributing to this proje
   - [Testing](#testing)
   - [Documentation](#documentation)
 - [Code of Conduct](#code-of-conduct)
+- [Security](#security)
 - [License](#license)
 - [Recognition](#recognition)
 - [Getting Assistance](#getting-assistance)
@@ -95,6 +96,10 @@ dotnet test NuciText.Grammar.UnitTests
 ## 📋 Code of Conduct
 
 This project follows the [Code of Conduct](./CODE_OF_CONDUCT.md).
+
+## 🔒 Security
+
+Report security vulnerabilities per the [Security Policy](./SECURITY.md).
 
 ## 📄 License
 

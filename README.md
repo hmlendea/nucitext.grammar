@@ -196,3 +196,7 @@ NuciText.Grammar operates entirely in-process on text provided by the calling ap
 ## 📜 Code of Conduct
 
 This project follows the [Code of Conduct](./CODE_OF_CONDUCT.md).
+
+## 🔒 Security
+
+Report security vulnerabilities per the [Security Policy](./SECURITY.md).

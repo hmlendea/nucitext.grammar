@@ -166,17 +166,17 @@ dotnet test
 dotnet pack -c Release
 ```
 
-## Contributing
+## 🤝 Contributing
 
-Contributions are welcome.
+You are welcome to submit any suggestion, feedback, or modification to this project.
 
-Please:
+When doing so, please:
+- Maintain cross-platform compatibility
+- Preserve the existing public contract unless a breaking change is intentional
+- Submit focused pull requests that conform to the existing code style
+- Maintain your branch synchronised with `master`
 
-- keep the changes cross-platform
-- keep the public APIs intact, unless the change is intentionally breaking
-- keep the pull requests focused and consistent with the existing style
-- update the documentation when the behaviour changes
-- add or update the tests for any new behaviour
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines.
 
 ## Related Projects
 

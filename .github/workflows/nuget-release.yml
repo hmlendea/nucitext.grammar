@@ -17,7 +17,7 @@ jobs:
       id-token: write
 
     env:
-      NUGET_PACKAGE_NAME: NuciXNA.Input
+      NUGET_PACKAGE_NAME: NuciText.Grammar
 
     steps:
     - uses: actions/checkout@v4

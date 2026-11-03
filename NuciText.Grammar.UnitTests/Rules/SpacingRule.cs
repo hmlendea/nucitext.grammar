@@ -4,37 +4,29 @@ using NUnit.Framework;
 
 namespace NuciText.Grammar.UnitTests.Rules
 {
-[TestFixture]
-public class SpacingRuleTests
-{
+    [TestFixture]
+    public class SpacingRuleTests
+    {
         readonly SpacingRule rule = new();
 
         [Test]
-        public void Id_ReturnsExpectedValue()
-        {
-            Assert.That(rule.Id, Is.EqualTo("spacing"));
-        }
+        public void Id_WhenAccessed_ThenReturnsExpectedValue()
+            => Assert.That(rule.Id, Is.EqualTo("spacing"));
 
         [Test]
-        public void Description_ReturnsExpectedValue()
-        {
-            Assert.That(rule.Description, Is.EqualTo("Normalises spacing around punctuation and emoticons."));
-        }
+        public void Description_WhenAccessed_ThenReturnsExpectedValue()
+            => Assert.That(rule.Description, Is.EqualTo("Normalises spacing around punctuation and emoticons."));
 
         [Test]
-        public void CanApply_TextContainsSpacingBeforePunctuation_ReturnsTrue()
-        {
-            Assert.That(rule.CanApply("Salut ,lume"), Is.True);
-        }
+        public void GivenTextContainsSpacingBeforePunctuation_WhenCanApply_ThenReturnsTrue()
+            => Assert.That(rule.CanApply("Salut ,lume"), Is.True);
 
         [Test]
-        public void CanApply_TextIsAlreadyNormalised_ReturnsFalse()
-        {
-            Assert.That(rule.CanApply("Salut, lume :D"), Is.False);
-        }
+        public void GivenTextIsAlreadyNormalised_WhenCanApply_ThenReturnsFalse()
+            => Assert.That(rule.CanApply("Salut, lume :D"), Is.False);
 
         [Test]
-        public void Apply_TextContainsSpacingBeforeComma_RemovesSpacingAndAddsSpaceAfterComma()
+        public void GivenTextContainsSpacingBeforeComma_WhenApply_ThenRemovesSpacingAndAddsSpaceAfterComma()
         {
             string result = rule.Apply("Salut ,lume");
 
@@ -42,7 +34,7 @@ public class SpacingRuleTests
         }
 
         [Test]
-        public void Apply_TextContainsMissingSpaceAfterPunctuation_AddsSpace()
+        public void GivenTextContainsMissingSpaceAfterPunctuation_WhenApply_ThenAddsSpace()
         {
             string result = rule.Apply("Salut:lume.bine;merci");
 
@@ -50,7 +42,7 @@ public class SpacingRuleTests
         }
 
         [Test]
-        public void Apply_TextContainsAttachedEmoticon_AddsSpaceBeforeEmoticon()
+        public void GivenTextContainsAttachedEmoticon_WhenApply_ThenAddsSpaceBeforeEmoticon()
         {
             string result = rule.Apply("salut:D");
 
@@ -58,9 +50,7 @@ public class SpacingRuleTests
         }
 
         [Test]
-        public void Apply_NullText_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => rule.Apply(null!));
-        }
+        public void GivenNullText_WhenApply_ThenThrowsArgumentNullException()
+            => Assert.Throws<ArgumentNullException>(() => rule.Apply(null!));
     }
 }

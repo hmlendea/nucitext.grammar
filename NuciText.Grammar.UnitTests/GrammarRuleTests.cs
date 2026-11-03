@@ -14,28 +14,28 @@ namespace NuciText.Grammar.UnitTests
         }
 
         [Test]
-        public void CanApply_TextChangedByApply_ReturnsTrue()
+        public void GivenTextChangedByApply_WhenCanApply_ThenReturnsTrue()
         {
             IGrammarRule rule = new TrimRule();
             Assert.That(rule.CanApply("  hello  "), Is.True);
         }
 
         [Test]
-        public void CanApply_TextNotChangedByApply_ReturnsFalse()
+        public void GivenTextNotChangedByApply_WhenCanApply_ThenReturnsFalse()
         {
             IGrammarRule rule = new TrimRule();
             Assert.That(rule.CanApply("hello"), Is.False);
         }
 
         [Test]
-        public void CanApply_NullText_ThrowsArgumentNullException()
+        public void GivenNullText_WhenCanApply_ThenThrowsArgumentNullException()
         {
             IGrammarRule rule = new TrimRule();
             Assert.Throws<ArgumentNullException>(() => rule.CanApply(null!));
         }
 
         [Test]
-        public void Apply_ProducesExpectedResult()
+        public void GivenTextWithWhitespace_WhenApply_ThenProducesExpectedResult()
         {
             IGrammarRule rule = new TrimRule();
             Assert.That(rule.Apply("  hello  "), Is.EqualTo("hello"));

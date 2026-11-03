@@ -5,7 +5,7 @@ namespace NuciText.Grammar.Rules
     /// <summary>
     /// Normalises spacing around punctuation and emoticons.
     /// </summary>
-    internal sealed class SpacingRule : GrammarRule
+    public sealed class SpacingRule : GrammarRule
     {
         /// <inheritdoc/>
         public override string Id => "spacing";

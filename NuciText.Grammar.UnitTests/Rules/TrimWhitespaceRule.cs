@@ -10,31 +10,23 @@ namespace NuciText.Grammar.UnitTests.Rules
         readonly TrimWhitespaceRule rule = new();
 
         [Test]
-        public void Id_ReturnsExpectedValue()
-        {
-            Assert.That(rule.Id, Is.EqualTo("trim-whitespace"));
-        }
+        public void Id_WhenAccessed_ThenReturnsExpectedValue()
+            => Assert.That(rule.Id, Is.EqualTo("trim-whitespace"));
 
         [Test]
-        public void Description_ReturnsExpectedValue()
-        {
-            Assert.That(rule.Description, Is.EqualTo("Normalises whitespace by trimming and collapsing internal whitespace."));
-        }
+        public void Description_WhenAccessed_ThenReturnsExpectedValue()
+            => Assert.That(rule.Description, Is.EqualTo("Normalises whitespace by trimming and collapsing internal whitespace."));
 
         [Test]
-        public void CanApply_TextHasLeadingOrTrailingWhitespace_ReturnsTrue()
-        {
-            Assert.That(rule.CanApply("  salut  "), Is.True);
-        }
+        public void GivenTextHasLeadingOrTrailingWhitespace_WhenCanApply_ThenReturnsTrue()
+            => Assert.That(rule.CanApply("  salut  "), Is.True);
 
         [Test]
-        public void CanApply_TextIsAlreadyTrimmed_ReturnsFalse()
-        {
-            Assert.That(rule.CanApply("salut lume"), Is.False);
-        }
+        public void GivenTextIsAlreadyTrimmed_WhenCanApply_ThenReturnsFalse()
+            => Assert.That(rule.CanApply("salut lume"), Is.False);
 
         [Test]
-        public void Apply_TextHasLeadingAndTrailingWhitespace_TrimsBothEnds()
+        public void GivenTextHasLeadingAndTrailingWhitespace_WhenApply_ThenTrimsBothEnds()
         {
             string result = rule.Apply("  salut lume  ");
 
@@ -42,7 +34,7 @@ namespace NuciText.Grammar.UnitTests.Rules
         }
 
         [Test]
-        public void Apply_TextContainsInternalWhitespace_CollapsesInternalWhitespace()
+        public void GivenTextContainsInternalWhitespace_WhenApply_ThenCollapsesInternalWhitespace()
         {
             string result = rule.Apply("  salut   lume  ");
 
@@ -50,7 +42,7 @@ namespace NuciText.Grammar.UnitTests.Rules
         }
 
         [Test]
-        public void Apply_TextContainsTabsAndNewlines_CollapsesWhitespaceToSingleSpaces()
+        public void GivenTextContainsTabsAndNewlines_WhenApply_ThenCollapsesWhitespaceToSingleSpaces()
         {
             string result = rule.Apply("\t salut\n\n lume \t");
 
@@ -58,9 +50,7 @@ namespace NuciText.Grammar.UnitTests.Rules
         }
 
         [Test]
-        public void Apply_NullText_ThrowsArgumentNullException()
-        {
-            Assert.Throws<ArgumentNullException>(() => rule.Apply(null!));
-        }
+        public void GivenNullText_WhenApply_ThenThrowsArgumentNullException()
+            => Assert.Throws<ArgumentNullException>(() => rule.Apply(null!));
     }
 }

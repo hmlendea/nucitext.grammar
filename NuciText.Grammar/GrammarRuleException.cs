@@ -31,10 +31,19 @@ namespace NuciText.Grammar
         }
 
         /// <summary>
-        /// Initialises a new <see cref="GrammarRuleException"/> for the given rule with a custom message and inner exception.
+        /// Initialises a new <see cref="GrammarRuleException"/> for the given rule with a custom message.
         /// </summary>
         public GrammarRuleException(string ruleId, string message, Exception innerException)
             : base(message, innerException)
+        {
+            RuleId = ruleId;
+        }
+
+        /// <summary>
+        /// Initialises a new <see cref="GrammarRuleException"/> for the given rule with an inner exception.
+        /// </summary>
+        public GrammarRuleException(string ruleId, Exception innerException)
+            : base($"Grammar rule '{ruleId}' failed to apply.", innerException)
         {
             RuleId = ruleId;
         }

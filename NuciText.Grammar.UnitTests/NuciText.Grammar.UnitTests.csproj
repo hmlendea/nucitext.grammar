@@ -5,6 +5,9 @@
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <IsTestProject>true</IsTestProject>
+    <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
   </PropertyGroup>
 
   <ItemGroup>

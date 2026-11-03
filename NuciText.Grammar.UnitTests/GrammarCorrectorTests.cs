@@ -28,69 +28,12 @@ namespace NuciText.Grammar.UnitTests
             public override IReadOnlyList<IGrammarRule> Rules => new[] { rule };
         }
 
-        [Test]
-        public void Constructor_NullRuleSet_ThrowsArgumentNullException()
+        sealed class MultiRuleSet(params IGrammarRule[] rules) : GrammarRuleSet
         {
-            Assert.Throws<ArgumentNullException>(() => new GrammarCorrector(null!));
-        }
+            readonly IGrammarRule[] rules = rules;
 
-        [Test]
-        public void Correct_NullText_ThrowsArgumentNullException()
-        {
-            IGrammarRuleSet ruleSet = new EmptyRuleSet();
-            IGrammarCorrector corrector = new GrammarCorrector(ruleSet);
-
-            Assert.Throws<ArgumentNullException>(() => corrector.Correct(null!));
-        }
-
-        [Test]
-        public void Correct_EmptyRuleSet_ReturnsSameText()
-        {
-            IGrammarRuleSet ruleSet = new EmptyRuleSet();
-            IGrammarCorrector corrector = new GrammarCorrector(ruleSet);
-
-            string result = corrector.Correct("hello  world");
-
-            Assert.That(result, Is.EqualTo("hello  world"));
-        }
-
-        [Test]
-        public void Correct_WithMatchingRule_AppliesCorrection()
-        {
-            IGrammarRuleSet ruleSet = new SingleRuleSet(new DoubleSpaceRule());
-            IGrammarCorrector corrector = new GrammarCorrector(ruleSet);
-
-            string result = corrector.Correct("hello  world");
-
-            Assert.That(result, Is.EqualTo("hello world"));
-        }
-
-        [Test]
-        public void Correct_WithNonMatchingRule_ReturnsSameText()
-        {
-            IGrammarRuleSet ruleSet = new SingleRuleSet(new DoubleSpaceRule());
-            IGrammarCorrector corrector = new GrammarCorrector(ruleSet);
-
-            string result = corrector.Correct("hello world");
-
-            Assert.That(result, Is.EqualTo("hello world"));
-        }
-
-        [Test]
-        public void Correct_MultipleMatchingRules_AppliesAllInOrder()
-        {
-            var rule1 = new DoubleSpaceRule();
-
-            // Rule 2 uppercases the first character
-            var ruleSet = new MultiRuleSet(
-                new DoubleSpaceRule(),
-                new UppercaseFirstCharRule());
-
-            IGrammarCorrector corrector = new GrammarCorrector(ruleSet);
-
-            string result = corrector.Correct("hello  world");
-
-            Assert.That(result, Is.EqualTo("Hello world"));
+            public override string LanguageCode => "en";
+            public override IReadOnlyList<IGrammarRule> Rules => rules;
         }
 
         sealed class UppercaseFirstCharRule : GrammarRule
@@ -109,12 +52,64 @@ namespace NuciText.Grammar.UnitTests
             }
         }
 
-        sealed class MultiRuleSet(params IGrammarRule[] rules) : GrammarRuleSet
-        {
-            readonly IGrammarRule[] rules = rules;
+        [Test]
+        public void GivenNullRuleSet_WhenConstructing_ThenThrowsArgumentNullException()
+            => Assert.Throws<ArgumentNullException>(() => new GrammarCorrector(null!));
 
-            public override string LanguageCode => "en";
-            public override IReadOnlyList<IGrammarRule> Rules => rules;
+        [Test]
+        public void GivenEmptyRuleSet_WhenCorrectingNullText_ThenThrowsArgumentNullException()
+        {
+            IGrammarRuleSet ruleSet = new EmptyRuleSet();
+            IGrammarCorrector corrector = new GrammarCorrector(ruleSet);
+
+            Assert.Throws<ArgumentNullException>(() => corrector.Correct(null!));
+        }
+
+        [Test]
+        public void GivenEmptyRuleSet_WhenCorrectingText_ThenReturnsSameText()
+        {
+            IGrammarRuleSet ruleSet = new EmptyRuleSet();
+            IGrammarCorrector corrector = new GrammarCorrector(ruleSet);
+
+            string result = corrector.Correct("hello  world");
+
+            Assert.That(result, Is.EqualTo("hello  world"));
+        }
+
+        [Test]
+        public void GivenMatchingRule_WhenCorrectingText_ThenAppliesCorrection()
+        {
+            IGrammarRuleSet ruleSet = new SingleRuleSet(new DoubleSpaceRule());
+            IGrammarCorrector corrector = new GrammarCorrector(ruleSet);
+
+            string result = corrector.Correct("hello  world");
+
+            Assert.That(result, Is.EqualTo("hello world"));
+        }
+
+        [Test]
+        public void GivenNonMatchingRule_WhenCorrectingText_ThenReturnsSameText()
+        {
+            IGrammarRuleSet ruleSet = new SingleRuleSet(new DoubleSpaceRule());
+            IGrammarCorrector corrector = new GrammarCorrector(ruleSet);
+
+            string result = corrector.Correct("hello world");
+
+            Assert.That(result, Is.EqualTo("hello world"));
+        }
+
+        [Test]
+        public void GivenMultipleMatchingRules_WhenCorrectingText_ThenAppliesAllInOrder()
+        {
+            var ruleSet = new MultiRuleSet(
+                new DoubleSpaceRule(),
+                new UppercaseFirstCharRule());
+
+            IGrammarCorrector corrector = new GrammarCorrector(ruleSet);
+
+            string result = corrector.Correct("hello  world");
+
+            Assert.That(result, Is.EqualTo("Hello world"));
         }
     }
 }

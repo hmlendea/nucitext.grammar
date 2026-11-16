@@ -1,6 +1,7 @@
 [![Donate](https://img.shields.io/badge/-%E2%99%A5%20Donate-%23ff69b4)](https://hmlendea.go.ro/funding)
 [![Latest Release](https://img.shields.io/github/v/release/hmlendea/nucitext.grammar)](https://github.com/hmlendea/nucitext.grammar/releases/latest)
 [![Build Status](https://github.com/hmlendea/nucitext.grammar/actions/workflows/dotnet.yml/badge.svg)](https://github.com/hmlendea/nucitext.grammar/actions/workflows/dotnet.yml)
+[![Security Scan](https://github.com/hmlendea/nucitext.grammar/actions/workflows/security.yml/badge.svg)](https://github.com/hmlendea/nucitext.grammar/actions/workflows/security.yml)
 [![NuGet](https://img.shields.io/nuget/v/NuciText.Grammar)](https://nuget.org/packages/NuciText.Grammar)
 [![License](https://img.shields.io/github/license/hmlendea/nucitext.grammar)](https://github.com/hmlendea/nucitext.grammar/blob/master/LICENSE)
 
@@ -18,6 +19,7 @@
 - [Built-in Rule](#-built-in-rule)
 - [Known Limitations](#-known-limitations)
 - [Documentation](#-documentation)
+- [GitHub Actions](#-github-actions)
 - [Contributing](#-contributing)
 - [Security](#-security)
 - [Architecture](#-architecture)
@@ -136,6 +138,15 @@ Full documentation is available in the [`docs/`](./docs/) directory:
 - [API Reference](./docs/api-reference/INDEX.md) — Public API surface table
 - [Testing Guide](./docs/testing.md) — NUnit + Moq strategy and patterns
 - [Troubleshooting](./docs/troubleshooting.md) — Common issues and debugging
+
+## ⚙️ GitHub Actions
+
+| Workflow | Purpose | What it does |
+|----------|---------|--------------|
+| [ .NET ](https://github.com/hmlendea/nucitext.grammar/blob/master/.github/workflows/dotnet.yml) | Continuous integration | Restores dependencies, builds the solution, and runs the unit and architecture tests on every push and pull request to `master` |
+| [ Security ](https://github.com/hmlendea/nucitext.grammar/blob/master/.github/workflows/security.yml) | Security scanning | Checks for vulnerable packages, builds the solution, and runs CodeQL static analysis for C#, publishing results to GitHub Code Scanning on push and pull request to `master`, plus a weekly scheduled run |
+| [ GitHub Release ](https://github.com/hmlendea/nucitext.grammar/blob/master/.github/workflows/github-release.yml) | GitHub release assets | Packs the NuGet package on a published release, calculates its SHA256 checksum, uploads it to the release, and appends the checksum to the release notes |
+| [ NuGet.org Release ](https://github.com/hmlendea/nucitext.grammar/blob/master/.github/workflows/nuget-release.yml) | Package publication | Packs the NuGet package on a published release and pushes it to NuGet.org using OIDC-authenticated credentials |
 
 ## 🤝 Contributing
 

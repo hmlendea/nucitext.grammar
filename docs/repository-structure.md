@@ -7,6 +7,7 @@ nucitext.grammar/
 ├── .github/
 │   └── workflows/
 │       ├── dotnet.yml              # CI: build, test
+│       ├── security.yml            # Security: vulnerable packages, CodeQL
 │       ├── github-release.yml      # GitHub Release: pack, upload, checksum
 │       └── nuget-release.yml       # NuGet.org: pack, OIDC login, push
 ├── NuciText.Grammar/               # Main library project

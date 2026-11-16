@@ -8,6 +8,7 @@ This document describes the security policy for NuciText.Grammar, including supp
 - [Reporting a Vulnerability](#-reporting-a-vulnerability)
 - [Scope](#-scope)
 - [Disclosure Policy](#-disclosure-policy)
+- [Automated Security Scanning](#-automated-security-scanning)
 
 ## 🛡️ Supported Versions
 
@@ -46,3 +47,11 @@ This project follows coordinated disclosure:
 2. A remediation plan is prepared and validated.
 3. Public disclosure is published after a fix, mitigation, or agreed risk decision is available.
 4. Credit is attributed in accordance with reporter preference and project policy.
+
+## 🔍 Automated Security Scanning
+
+This repository runs automated security scans on every push and pull request to `master`, and on a weekly schedule. The scan includes:
+- **Vulnerable package detection** checks the full dependency graph, including transitive packages, for known advisories.
+- **CodeQL static analysis** analyses the C# source for security-relevant coding defects.
+
+Results are published to the [Security](https://github.com/hmlendea/nucitext.grammar/security) tab and the [Actions](https://github.com/hmlendea/nucitext.grammar/actions/workflows/security.yml) workflow page.

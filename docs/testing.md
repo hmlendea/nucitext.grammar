@@ -14,12 +14,28 @@ NuciText.Grammar uses **NUnit 4.x** with **Moq** for unit testing. Tests focus o
 
 ```
 NuciText.Grammar.UnitTests/
-├── GrammarCorrectorTests.cs    # Corrector behavior
-├── GrammarRuleTests.cs         # Base rule behavior
-├── Rules/
-│   ├── SpacingRule.cs          # SpacingRule tests
-│   └── TrimWhitespaceRule.cs   # TrimWhitespaceRule tests
+├── GrammarCorrectorTests.cs            # Corrector behaviour
+├── GrammarRuleExceptionTests.cs        # Exception constructors and properties
+├── GrammarRuleSetTests.cs              # Rule set contract
+├── GrammarRuleTests.cs                 # Base rule behaviour
+├── Dummies/                            # Shared custom test implementations
+│   ├── DoubleSpaceRule.cs
+│   ├── EmptyRuleSet.cs
+│   ├── FixedApplicabilityRule.cs
+│   ├── MultiRuleSet.cs
+│   ├── RegexReplacementRule.cs
+│   ├── SingleRuleSet.cs
+│   ├── SingleWordReplacementRule.cs
+│   ├── TrimRule.cs
+│   ├── UppercaseFirstCharRule.cs
+│   └── WordReplacementRule.cs
+└── Rules/
+    ├── PatternReplacementRuleBaseTests.cs   # Word and regex replacement helpers
+    ├── SpacingRuleTests.cs                 # SpacingRule tests
+    └── TrimWhitespaceRuleTests.cs          # TrimWhitespaceRule tests
 ```
+
+Dummy implementations are top-level `internal` classes in separate files so they can be reused across fixtures without duplicating rule logic.
 
 ## Naming convention
 
@@ -56,29 +72,50 @@ dotnet test --logger "console;verbosity=detailed"
 
 ### GrammarCorrectorTests
 
-| Test class | Purpose |
-|------------|---------|
-| `NullRuleSet` | Constructor validates ruleSet |
-| `NullText` | Correct validates input |
-| `EmptyRuleSet` | No rules = identity |
-| `SingleRuleSet` | One matching rule |
-| `MultiRuleSet` | Multiple rules in order |
-| `DoubleSpaceRule` | Custom rule integration |
+| Area | Purpose |
+|------|---------|
+| Constructor validation | Null `ruleSet` throws `ArgumentNullException` with `ruleSet` parameter name |
+| Input validation | Null `text` throws `ArgumentNullException` with `text` parameter name |
+| Empty rule set | No rules = identity; result is never null |
+| Single rule | One matching rule is applied; non-matching rule is skipped |
+| Rule ordering | Rules receive the previous rule's output; declared order is enforced with `MockSequence` |
+| `CanApply` gating | `Apply` is never invoked when `CanApply` returns `false` |
+| Applicability overrides | `CheckApplicability` overrides are honoured in both directions |
+| Exception propagation | Exceptions from `CanApply` and `Apply` propagate unchanged; later rules are not invoked |
+| Determinism | Repeated and re-applied corrections produce stable results |
 
 ### GrammarRuleTests
 
-| Test | Purpose |
+| Area | Purpose |
 |------|---------|
-| `CanApply_ReturnsTrue_WhenDoApplyChangesText` | Default CanApply logic |
-| `CanApply_ReturnsFalse_WhenDoApplyReturnsSameText` | Default CanApply logic |
-| `CanApply_Throws_WhenTextIsNull` | Null validation |
-| `Apply_ReturnsDoApplyResult_WhenCanApplyTrue` | Apply delegation |
-| `Apply_Throws_WhenTextIsNull` | Null validation |
+| Metadata | `Id` and `Description` are exposed |
+| Default applicability | `CanApply` returns `true` only when `DoApply` changes the text |
+| Null validation | `CanApply` and `Apply` throw `ArgumentNullException` naming `text` |
+| Delegation | `Apply` returns the `DoApply` result for empty, single-word, and whitespace input |
+| Overridden applicability | `CheckApplicability` overrides bypass the default comparison |
+
+### GrammarRuleSetTests
+
+| Area | Purpose |
+|------|---------|
+| Empty rule set | `LanguageCode` is exposed; `Rules` is empty |
+| Single rule | `Rules` exposes exactly the declared rule |
+| Ordering | Multi-rule sets preserve declared order and count |
+
+### GrammarRuleExceptionTests
+
+| Area | Purpose |
+|------|---------|
+| Default constructor | `RuleId` is preserved and the message names the rule |
+| Custom message | Message is preserved alongside `RuleId` |
+| Inner exception | Inner exception is preserved with default or custom message |
+| Edge cases | Null `RuleId` renders an empty identifier; type derives from `Exception` |
 
 ### Rule-specific tests
 
-- `TrimWhitespaceRule` — Trimming, collapsing, edge cases
-- `SpacingRule` — Punctuation, emoticons, edge cases
+- `TrimWhitespaceRule` — Trimming, collapsing, tab/newline/form-feed handling, non-breaking space, empty input, idempotency
+- `SpacingRule` — Spaces before punctuation, spaces after punctuation, all supported emoticons, unchanged text, idempotency
+- `PatternReplacementRuleBase` — Whole-word replacement at start, middle, and end of text, all word terminators, partial-word non-matches, chained replacements, regex capture groups, `RegexReplacement` equality
 
 ## Test patterns
 
@@ -192,9 +229,4 @@ Tests run in GitHub Actions (`.github/workflows/dotnet.yml`):
 
 ## Test data
 
-Use standard test values from [common.test-values.instructions.md](../../../.config/Code%20-%20OSS/User/prompts/instructions/common/common.test-values.instructions.md):
-
-- Names: Alice, Bob, Carol
-- Emails: alice@example.com
-- Dates: 2026-01-15
-- Locations: Springfield, IL
+Fixture values follow the shared `test-values` skill guidance; use short Romanian-language phrases (`salut`, `salut lume`, `bună`) for correction samples.

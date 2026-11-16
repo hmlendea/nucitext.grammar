@@ -84,6 +84,7 @@ The library does not:
 
 - All code reviewed via PR
 - CI runs on every push (`dotnet.yml`)
+- Automated security scanning runs on every push and pull request (`security.yml`): vulnerable package detection and CodeQL static analysis
 - No secrets in repository
 - GPL-3.0-or-later license (copyleft)
 

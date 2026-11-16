@@ -15,6 +15,22 @@ Steps:
 4. Build (`dotnet build --no-restore`)
 5. Test (`dotnet test --no-build --verbosity normal`)
 
+### Security workflow (`.github/workflows/security.yml`)
+
+Triggers:
+- Push to `master` branch
+- Pull requests to `master` branch
+- Weekly schedule (Sundays at 00:00 UTC)
+
+Steps:
+1. Checkout repository
+2. Setup .NET 10.0.x
+3. Restore dependencies (`dotnet restore`)
+4. Check for vulnerable packages (`dotnet list package --vulnerable --include-transitive`)
+5. Initialise CodeQL for C#
+6. Build (`dotnet build --no-restore`)
+7. Run CodeQL analysis and upload results to GitHub Code Scanning
+
 ### Release workflows
 
 #### GitHub Release (`.github/workflows/github-release.yml`)
